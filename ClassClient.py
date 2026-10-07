@@ -1,44 +1,50 @@
 import socket
-from socket import *
+# from socket import *
 
-def simpleClient(host, message):
-    s = socket()
-    s.connect((host, 2001))
-    s.send(message.encode("utf-8"))
+print("Ip: " + socket.gethostbyname(socket.gethostname()))
 
-    response = s.recv(1024)
-    data = response.decode("utf-8")
-    print(data)
-
-    person = "all"
-    message = "where " + person
-    s.send(message.encode('utf-8'))
-
-    response = s.recv(1024)
-    data = response.decode("utf-8")
-    print("*"+data)
-
-
-    s.close()
 
 def getMyIp():
-    return "192.168.0.140"
-    # return "172.16.212.159"
+    print("Ip: " + socket.gethostbyname(socket.gethostname()))
+    return socket.gethostbyname(socket.gethostname())
+
 
 def getHostName():
     return "colton"
 
-# print('colton,' + getMyIp())
+def simpleClient(host, message, protocol):
+    s = socket.socket()
+    s.connect((host, protocol))
 
+    if protocol == 2001:
+        message = getHostName() + "," + getMyIp()
+        print(message)
+        s.send(message.encode("utf-8"))
+        response = s.recv(1024)
+        data = response.decode("utf-8")
+        print(data)
+        person = "hughes"
+        message = "where " + person
+        s.send(message.encode('utf-8'))
+        response = s.recv(1024)
+        data = response.decode("utf-8")
+        print("*"+data)
+        s.close()
+        return (data.split(","))[0]
+    elif protocol == 2026:
+        s.send(message.encode("utf-8"))
+        response = s.recv(1024)
+        data = response.decode("utf-8")
+        print(data)
+        s.close()
+        return ""
+    return ""
 
-# simpleClient("192.168.0.43", getHostName() + "," + getMyIp())
-simpleClient("192.168.0.225", getHostName() + "," + getMyIp())
-# simpleClient("192.168.0.43:2001", "what")
-# simpleClient("192.168.0.43:2001", "where")
-# simpleClient("192.168.0.43:2001", "when")
-# simpleClient("192.168.0.43:2001", "why")
-# simpleClient("192.168.0.43:2001", "how")
+personIP = simpleClient("192.168.0.43", "", 2001)
+simpleClient(personIP, "what", 2026)
+simpleClient(personIP, "where", 2026)
+simpleClient(personIP, "when", 2026)
+simpleClient(personIP, "why", 2026)
+simpleClient(personIP, "how", 2026)
 
-def getHost(hostName):
-    simpleClient("192.168.0.225", "colton," + getMyIp())
 
