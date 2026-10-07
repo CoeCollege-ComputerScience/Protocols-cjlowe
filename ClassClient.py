@@ -23,8 +23,7 @@ def simpleClient(host, message, protocol):
         response = s.recv(1024)
         data = response.decode("utf-8")
         print(data)
-        person = "hughes"
-        message = "where " + person
+        message = "where " + message
         s.send(message.encode('utf-8'))
         response = s.recv(1024)
         data = response.decode("utf-8")
@@ -40,11 +39,14 @@ def simpleClient(host, message, protocol):
         return ""
     return ""
 
-personIP = simpleClient("192.168.0.43", "", 2001)
-simpleClient(personIP, "what", 2026)
-simpleClient(personIP, "where", 2026)
-simpleClient(personIP, "when", 2026)
-simpleClient(personIP, "why", 2026)
-simpleClient(personIP, "how", 2026)
+def LearnAbout(hostName):
+    personIP = simpleClient("192.168.0.43", hostName, 2001)
+    simpleClient(personIP, "what", 2026)
+    simpleClient(personIP, "where", 2026)
+    simpleClient(personIP, "when", 2026)
+    simpleClient(personIP, "why", 2026)
+    simpleClient(personIP, "how", 2026)
+
+LearnAbout("hughes")
 
 
