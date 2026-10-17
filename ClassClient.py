@@ -15,16 +15,19 @@ def getHostName():
 def simpleClient(host, message, protocol):
     s = socket.socket()
     s.connect((host, protocol))
+    print(host)
+    print(message)
 
     if protocol == 2001:
-        message = getHostName() + "," + getMyIp()
-        print(message)
-        s.send(message.encode("utf-8"))
+        sent = getHostName() + "," + getMyIp()
+        print(sent)
+        s.send(sent.encode("utf-8"))
         response = s.recv(1024)
         data = response.decode("utf-8")
         print(data)
-        message = "where " + message
-        s.send(message.encode('utf-8'))
+        newMessage = "where " + message
+        print(newMessage)
+        s.send(newMessage.encode('utf-8'))
         response = s.recv(1024)
         data = response.decode("utf-8")
         print("*"+data)
